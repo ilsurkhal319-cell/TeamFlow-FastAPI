@@ -1,0 +1,156 @@
+.scroll-smooth {
+    scroll-behavior: smooth;
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Drag & Drop стили */
+.task-card {
+    cursor: grab;
+}
+
+.task-card:active {
+    cursor: grabbing;
+}
+
+.task-card.dragging {
+    opacity: 0.5;
+    transform: scale(0.98);
+}
+
+.drop-zone.drag-over {
+    background-color: rgba(139, 92, 246, 0.1);
+    border: 2px dashed rgb(139, 92, 246);
+}
+
+.drop-zone.drag-over > * {
+    pointer-events: none;
+}
+
+/* Модальное окно - анимация появления */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-modal-in {
+    animation: modalSlideIn 0.2s ease-out forwards;
+}
+
+#taskModal.hidden {
+    display: none;
+}
+
+/* Стили для кнопок приоритета */
+.priority-btn {
+    background-color: transparent;
+}
+
+.priority-btn.selected {
+    background-color: rgba(139, 92, 246, 0.2);
+    border-color: rgb(139, 92, 246) !important;
+    color: rgb(167, 139, 250) !important;
+}
+
+.priority-btn[data-priority="low"].selected {
+    background-color: rgba(34, 197, 94, 0.2);
+    border-color: rgb(34, 197, 94) !important;
+    color: rgb(74, 222, 128) !important;
+}
+
+.priority-btn[data-priority="medium"].selected {
+    background-color: rgba(234, 179, 8, 0.2);
+    border-color: rgb(234, 179, 8) !important;
+    color: rgb(202, 138, 4) !important;
+}
+
+.priority-btn[data-priority="high"].selected {
+    background-color: rgba(239, 68, 68, 0.2);
+    border-color: rgb(239, 68, 68) !important;
+    color: rgb(252, 129, 129) !important;
+}
+
+/* Анимация появления новой карточки */
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.task-card.animate-in {
+    animation: cardSlideIn 0.3s ease-out forwards;
+}
+
+/* Стили для фокуса в модалке */
+#taskModal input:focus,
+#taskModal textarea:focus {
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+.column {
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: visible;
+}
+
+.column.collapsed .drop-zone {
+    padding: 12px 8px;
+}
+
+.column.collapsed h2 {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-size: 14px;
+}
+.column {
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.column.collapsed {
+    min-width: 64px;
+}
+
+.column.collapsed .rounded-t-3xl {
+    padding: 16px 8px;
+    text-align: center;
+}
+
+.column.collapsed h2 {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+/* Скрываем кнопку "+ Add new card" при свёрнутой колонке */
+.column.collapsed button[onclick*="addNewTask"] {
+    display: none;
+}

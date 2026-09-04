@@ -1,0 +1,9 @@
+export type User = { id: number; name: string; username?: string; email: string; avatar_color?: string };
+export type Task = { id: number; title: string; description?: string; priority: 'low' | 'medium' | 'high'; due_date?: string | null; assignee?: User | null };
+export type Column = { id: number; title: string; order: number; tasks: Task[] };
+export type Board = { id: number; workspace_id?: number; title: string; description?: string; color?: string; is_favorite?: boolean; is_archived?: boolean; is_shared?: boolean; can_edit?: boolean; columns: Column[] };
+export type BoardSummary = Omit<Board, 'columns'> & { columns?: Column[] };
+export type Workspace = { id: number; name: string; description?: string };
+export type BoardMember = User & { role?: string };
+export type Notification = { id: number; kind: string; title: string; message: string; is_read: boolean; created_at: string; board_id?: number | null; invitation_id?: number | null; actor?: User | null };
+export type Comment = { id: number; text: string; created_at: string; author: User };

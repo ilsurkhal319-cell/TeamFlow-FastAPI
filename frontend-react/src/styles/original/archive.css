@@ -1,0 +1,55 @@
+/* ============================================================
+   Страница архива - TeamFlow
+   ============================================================ */
+
+/* Карточка архивной доски */
+.archive-card {
+    transition: all 0.3s ease;
+}
+
+.archive-card:hover {
+    box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Приглушённые цвета в архиве */
+.archive-card .bg-slate-500 {
+    opacity: 0.7;
+}
+
+/* Тусклые аватары участников */
+.archive-card .opacity-50 {
+    transition: opacity 0.2s ease;
+}
+
+.archive-card:hover .opacity-50 {
+    opacity: 0.7;
+}
+
+/* Кнопки действий при наведении */
+.archive-card .group-hover\:opacity-100 {
+    pointer-events: auto;
+}
+
+/* Анимация восстановления */
+@keyframes restoreAnimation {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Анимация удаления */
+@keyframes deleteAnimation {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

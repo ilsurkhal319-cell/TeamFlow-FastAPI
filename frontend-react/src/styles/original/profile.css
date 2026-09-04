@@ -1,0 +1,123 @@
+.profile-header-stripe {
+    height: 6px;
+    background: linear-gradient(90deg, #8b5cf6, #ec4899);
+}
+
+.profile-tabs {
+    scrollbar-width: thin;
+    scrollbar-color: #3f3f46 transparent;
+}
+
+.tab-btn {
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.tab-btn.active {
+    color: #a78bfa;
+    border-bottom-color: #8b5cf6;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
+}
+
+.tab-btn:hover:not(.active) {
+    color: #d4d4d8;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: profileFadeIn 0.2s ease;
+}
+
+.board-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.board-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.avatar-ring,
+.change-photo-btn {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.avatar-container:hover .avatar-ring,
+.avatar-container:hover .change-photo-btn,
+.change-photo-btn:focus-visible {
+    opacity: 1;
+}
+
+.activity-item {
+    transition: background-color 0.15s ease;
+}
+
+.activity-item:hover {
+    background: rgba(139, 92, 246, 0.05);
+}
+
+.filter-btn {
+    border: 1px solid #3f3f46;
+    background: #09090b;
+    color: #a1a1aa;
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.filter-btn:hover {
+    color: #f4f4f5;
+    background: #27272a;
+}
+
+.filter-btn.active {
+    color: #fff;
+    background: #7c3aed;
+    border-color: #7c3aed;
+}
+
+.profile-input {
+    width: 100%;
+    border: 1px solid #3f3f46;
+    border-radius: 0.75rem;
+    background: #09090b;
+    padding: 0.75rem 1rem;
+    color: #f4f4f5;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.profile-input:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 1px #7c3aed;
+}
+
+.edit-modal .modal-content,
+#editProfileModal .modal-content {
+    animation: profileModalIn 0.25s ease-out;
+}
+
+@keyframes profileFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes profileModalIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% + 20px)) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@media (hover: none) {
+    .change-photo-btn {
+        opacity: 1;
+    }
+}

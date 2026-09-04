@@ -1,0 +1,94 @@
+/* ============================================================
+   Страница Избранное - TeamFlow
+   ============================================================ */
+
+/* Основной фон страницы */
+body.favorites-page {
+    background-color: #09090b;
+}
+
+/* Анимация появления карточек */
+.favorite-card {
+    animation: cardFadeIn 0.4s ease-out backwards;
+}
+
+.favorite-card:nth-child(1) { animation-delay: 0.05s; }
+.favorite-card:nth-child(2) { animation-delay: 0.1s; }
+.favorite-card:nth-child(3) { animation-delay: 0.15s; }
+.favorite-card:nth-child(4) { animation-delay: 0.2s; }
+.favorite-card:nth-child(5) { animation-delay: 0.25s; }
+.favorite-card:nth-child(6) { animation-delay: 0.3s; }
+.favorite-card:nth-child(7) { animation-delay: 0.35s; }
+.favorite-card:nth-child(8) { animation-delay: 0.4s; }
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover эффект для карточек */
+.favorite-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    ring: 2px solid rgba(139, 92, 246, 0.3);
+}
+
+/* Золотая звезда */
+.favorite-card .text-amber-400 {
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.4));
+}
+
+/* Скроллбар для секции срочных задач */
+.overflow-x-auto::-webkit-scrollbar {
+    height: 8px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+    background: #18181b;
+    border-radius: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+    background: #3f3f46;
+    border-radius: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: #52525b;
+}
+
+/* Анимация удаления из избранного */
+@keyframes removeFavorite {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9) translateY(-10px);
+    }
+}
+
+.removing {
+    animation: removeFavorite 0.3s ease-out forwards;
+}
+
+/* Горизонтальный скролл колесиком */
+.scroll-smooth {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Стили для пустого состояния */
+.empty-favorites .text-amber-500 {
+    filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.3));
+}

@@ -1,0 +1,12 @@
+.env
+__pycache__/
+*.py[cod]
+.venv/
+teamflow.db
+node_modules/
+dist/
+!.env.example
+!.env.production.example
+.idea/
+coverage/
+.pytest_cache/
