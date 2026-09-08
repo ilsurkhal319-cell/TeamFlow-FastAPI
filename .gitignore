@@ -9,4 +9,5 @@ dist/
 !.env.production.example
 .idea/
 coverage/
+.coverage
 .pytest_cache/

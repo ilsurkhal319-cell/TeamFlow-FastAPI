@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
+from redis import Redis
 from sqlalchemy import delete, select
 
 
@@ -14,11 +15,32 @@ if TEST_DATABASE.exists():
     TEST_DATABASE.unlink()
 
 os.environ["DATABASE_URL"] = f"sqlite:///{TEST_DATABASE}"
+os.environ["REDIS_URL"] = os.environ.get("TEST_REDIS_URL", "redis://localhost:6379/15")
 os.environ["SEED_DEMO"] = "false"
 
+from app.core.config import settings
 from app.db.session import SessionLocal
 from app.domain.models import User, Workspace
 from app.main import app
+
+
+@pytest.fixture(autouse=True)
+def reset_test_redis():
+    client = Redis.from_url(settings.redis_url, socket_connect_timeout=1, socket_timeout=1)
+    try:
+        client.flushdb()
+    except Exception:
+        pass
+    finally:
+        client.close()
+    yield
+    client = Redis.from_url(settings.redis_url, socket_connect_timeout=1, socket_timeout=1)
+    try:
+        client.flushdb()
+    except Exception:
+        pass
+    finally:
+        client.close()
 
 
 @pytest.fixture

@@ -41,12 +41,13 @@ def consume_ticket(ticket: str) -> int | None:
         client.close()
 
 
-async def relay_from_redis(board_id: int, websocket: WebSocket, ready: asyncio.Event) -> None:
+async def relay_from_redis(board_id: int, websocket: WebSocket, subscribed: asyncio.Event, accepted: asyncio.Event) -> None:
     client = Redis.from_url(settings.redis_url, socket_connect_timeout=1, socket_timeout=None)
     pubsub = client.pubsub()
     try:
         await pubsub.subscribe(channel_for_board(board_id))
-        ready.set()
+        subscribed.set()
+        await accepted.wait()
         async for message in pubsub.listen():
             if message.get("type") != "message":
                 continue
@@ -66,12 +67,14 @@ async def board_events(websocket: WebSocket, board_id: int):
     if not can_access(board_id, user_id):
         await websocket.close(code=1008, reason="Authentication required")
         return
-    await websocket.accept()
-    connections[board_id].add(websocket)
-    ready = asyncio.Event()
-    relay_task = asyncio.create_task(relay_from_redis(board_id, websocket, ready))
+    subscribed = asyncio.Event()
+    accepted = asyncio.Event()
+    relay_task = asyncio.create_task(relay_from_redis(board_id, websocket, subscribed, accepted))
     try:
-        await asyncio.wait_for(ready.wait(), timeout=2)
+        await asyncio.wait_for(subscribed.wait(), timeout=2)
+        await websocket.accept()
+        accepted.set()
+        connections[board_id].add(websocket)
         while True:
             await websocket.receive_text()
     except WebSocketDisconnect:

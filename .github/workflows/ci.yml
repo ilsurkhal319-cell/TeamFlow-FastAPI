@@ -26,7 +26,7 @@ jobs:
         working-directory: backend
     env:
       DATABASE_URL: postgresql+psycopg://teamflow:teamflow@localhost:5432/teamflow
-      REDIS_URL: redis://localhost:6379/0
+      REDIS_URL: redis://localhost:6379/15
       SECRET_KEY: ci-secret-key-with-more-than-thirty-two-characters
       ENVIRONMENT: development
       SEED_DEMO: "false"
