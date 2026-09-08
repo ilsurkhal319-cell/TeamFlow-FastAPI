@@ -46,6 +46,9 @@ async def relay_from_redis(board_id: int, websocket: WebSocket, subscribed: asyn
     pubsub = client.pubsub()
     try:
         await pubsub.subscribe(channel_for_board(board_id))
+        confirmation = await pubsub.get_message(ignore_subscribe_messages=False, timeout=2)
+        if not confirmation or confirmation.get("type") != "subscribe":
+            raise RuntimeError("Redis subscription was not confirmed")
         subscribed.set()
         await accepted.wait()
         async for message in pubsub.listen():
