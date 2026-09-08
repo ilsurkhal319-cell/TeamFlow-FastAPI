@@ -108,6 +108,8 @@ def claim_invitation(payload: InvitationClaim, user: User = Depends(current_user
     if not invitation or invitation.status != "pending":
         raise HTTPException(status_code=404, detail="Код приглашения недействителен или уже использован")
     board = db.scalar(select(Board).options(selectinload(Board.members), selectinload(Board.workspace)).where(Board.id == invitation.board_id))
+    if not board:
+        raise HTTPException(status_code=404, detail="Доска для приглашения не найдена")
     if board.workspace.owner_id == user.id or any(member.id == user.id for member in board.members):
         raise HTTPException(status_code=409, detail="Вы уже участник этой доски")
     invitation.invitee_id = user.id
@@ -144,6 +146,8 @@ def accept_invitation(invitation_id: int, user: User = Depends(current_user), db
         raise HTTPException(status_code=409, detail="Приглашение уже обработано")
 
     board = db.scalar(select(Board).options(selectinload(Board.members), selectinload(Board.workspace)).where(Board.id == invitation.board_id))
+    if not board:
+        raise HTTPException(status_code=404, detail="Доска для приглашения не найдена")
     invitation.status = "accepted"
     invitation.responded_at = datetime.utcnow()
     for notification in db.scalars(select(Notification).where(Notification.invitation_id == invitation.id, Notification.recipient_id == user.id)).all():
